@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+    <changeSet id="create-customers-table" author="Nick">
+        <createTable tableName="customers">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"
+                             nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="VARCHAR(100)"/>
+            <column name="street" type="VARCHAR(100)"/>
+            <column name="zipcode" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+    <!-- Создание таблицы users -->
+    <changeSet id="create-users-table" author="Nick">
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"
+                             nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(50)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enabled" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customer_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <!-- Добавляем внешний ключ от users к customers -->
+        <addForeignKeyConstraint
+                baseTableName="users"
+                baseColumnNames="customer_id"
+                referencedTableName="customers"
+                referencedColumnNames="id"
+                constraintName="fk_users_customers"
+                onDelete="SET NULL"
+                onUpdate="CASCADE"/>
+    </changeSet>
+
+    <!-- Создание таблицы authorities -->
+    <changeSet id="create-authorities-table" author="Nick">
+        <createTable tableName="authorities">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"
+                             nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Добавляем внешний ключ от authorities к users -->
+        <addForeignKeyConstraint
+                baseTableName="authorities"
+                baseColumnNames="username"
+                referencedTableName="users"
+                referencedColumnNames="username"
+                constraintName="fk_authorities_users"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"/>
+    </changeSet>
+
+    <!-- Создание индекса на authorities(username) -->
+    <changeSet id="create-authorities-username-index" author="Nick">
+        <createIndex
+                tableName="authorities"
+                indexName="idx_authorities_username">
+            <column name="username"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="create-order-table" author="Nick">
+        <createTable tableName="orders">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"
+                             nullable="false"/>
+            </column>
+            <column name="date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customer_id" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_order_customer"
+                             referencedTableName="customers"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="create-customer-id-index" author="Nick">
+        <createIndex tableName="orders" indexName="idx_orders_customer_id">
+            <column name="customer_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="create-item-table" author="Nick">
+        <createTable tableName="items">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"
+                             nullable="false"/>
+            </column>
+            <column name="value" type="DECIMAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(100)"/>
+            <column name="name" type="VARCHAR(100)"/>
+            <column name="symbol" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="create-order-details-table" author="Nick">
+        <createTable tableName="order_details">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"
+                             nullable="false"/>
+            </column>
+            <column name="tax_status" type="VARCHAR(100)"/>
+            <column name="order_id" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_details_order"
+                             referencedTableName="orders"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="item_id" type="BIGINT">
+                <constraints foreignKeyName="fk_details_item"
+                             referencedTableName="items"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="value" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity_name" type="VARCHAR(100)"/>
+            <column name="quantity_symbol" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="create-order-id-index" author="Nick">
+        <createIndex tableName="order_details" indexName="idx_details_order_id">
+            <column name="order_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="create-item-id-index" author="Nick">
+        <createIndex tableName="order_details" indexName="idx_details_item_id">
+            <column name="item_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="create-payments-table" author="Nick">
+        <createTable tableName="payments">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="amount" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_id" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_payment_order"
+                             referencedTableName="orders"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="payment_status" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_type" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="create-cash-payments-table" author="Nick">
+        <createTable tableName="cash_payments">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"
+                             foreignKeyName="fk_cash_payment"
+                             referencedTableName="payments" referencedColumnNames="id"/>
+            </column>
+            <column name="cash_tendered" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="create-check-payments-table" author="Nick">
+        <createTable tableName="check_payments">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"
+                             foreignKeyName="fk_check_payment"
+                             referencedTableName="payments" referencedColumnNames="id"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bank_id" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="create-credit-payments-table" author="Nick">
+        <createTable tableName="credit_payments">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"
+                             foreignKeyName="fk_credit_payment"
+                             referencedTableName="payments" referencedColumnNames="id"/>
+            </column>
+            <column name="number" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="exp_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="create-payment-order-id-index" author="Nick">
+        <createIndex tableName="payments" indexName="idx_payment_order_id">
+            <column name="order_id"/>
+        </createIndex>
+    </changeSet>
+    <!-- Вставка администратора -->
+    <changeSet id="insert-admin-user" author="Nick">
+        <insert tableName="users">
+            <column name="username" value="admin"/>
+            <column name="password" value="$2y$10$PoBu8NTaYbx1U8kiD7MwyemM9V.tzEfZJTuoYZrsDK6NltuolIXBa"/> <!-- пароль 123 -->
+            <column name="enabled" valueBoolean="true"/>
+            <column name="customer_id" valueComputed="NULL"/>
+        </insert>
+
+        <insert tableName="authorities">
+            <column name="username" value="admin"/>
+            <column name="authority" value="ROLE_ADMIN"/>
+        </insert>
+    </changeSet>
+
+    <!-- Вставка обычного пользователя -->
+    <changeSet id="insert-normal-user" author="Nick">
+        <!-- Сначала создаём клиента -->
+        <insert tableName="customers">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Max Loginov"/>
+            <column name="city" value="Omsk"/>
+            <column name="street" value="Kirova 173"/>
+            <column name="zipcode" value="12345"/>
+        </insert>
+
+        <!-- Затем вставляем пользователя, связанного с customer -->
+        <insert tableName="users">
+            <column name="username" value="user"/>
+            <column name="password" value="$2y$10$PoBu8NTaYbx1U8kiD7MwyemM9V.tzEfZJTuoYZrsDK6NltuolIXBa"/> <!-- пароль 123 -->
+            <column name="enabled" valueBoolean="true"/>
+            <column name="customer_id" valueNumeric="1"/>
+        </insert>
+
+        <insert tableName="authorities">
+            <column name="username" value="user"/>
+            <column name="authority" value="ROLE_USER"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
