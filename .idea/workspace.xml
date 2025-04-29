@@ -5,95 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9918d4c8-a493-4cd6-8824-602cbc6b5eb5" name="Changes" comment="Paste project from 9lab">
-      <change afterPath="$PROJECT_DIR$/.idea/lab10.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/Lab7Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/config/JwtAuthFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/config/JwtUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/config/OpenApiConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/controller/CustomerController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/controller/ItemController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/controller/OrderController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/controller/OrderDetailController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/controller/PaymentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/dto/OrderFilterDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/dto/request/CustomerRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/dto/request/ItemRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/dto/request/OrderDetailRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/dto/request/OrderRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/dto/request/PaymentRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/dto/response/CustomerResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/dto/response/DtoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/dto/response/ItemResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/dto/response/OrderDetailResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/dto/response/OrderResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/dto/response/PaymentResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/Cash.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/Check.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/Credit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/Customer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/Item.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/Measurement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/Order.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/OrderDetail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/OrderStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/Payment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/PaymentStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/PaymentType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/value/Address.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/value/Quantity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/value/Weight.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/repository/CustomerRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/repository/ItemRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/repository/OrderDetailRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/repository/OrderRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/repository/PaymentRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/service/CurrentUserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/service/OrderFilterService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/service/TestDataService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/resources/db/changelog/changelog.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/test/java/com/example/lab7/IT/BaseIntegrationTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/test/java/com/example/lab7/IT/OrderFilterServiceIntegrationTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/test/java/com/example/lab7/Lab7ApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/java/com/example/security/SecurityApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/java/com/example/security/config/JwtAuthFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/java/com/example/security/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/java/com/example/security/controller/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/java/com/example/security/dto/AuthRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/java/com/example/security/dto/AuthResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/java/com/example/security/dto/RegisterRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/java/com/example/security/entity/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/java/com/example/security/entity/Roles.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/java/com/example/security/entity/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/java/com/example/security/repository/RoleRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/java/com/example/security/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/java/com/example/security/service/AuthService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/java/com/example/security/service/JwtService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/java/com/example/security/service/UserDetailsServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/main/resources/db/changelog/changelog.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/security/src/test/java/com/example/security/SecurityApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/src/main/resources/static/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,6 +49,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Nikolay-ux&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Nikolay-ux/SSWhw10.git&quot;,
+    &quot;accountId&quot;: &quot;1e197eda-cf71-4fdb-8ada-2ccccebff9f7&quot;
+  }
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="ProjectErrors" />
   </component>
@@ -143,20 +69,23 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2wMkCBu2ND1oU0T88WvVj6al2Fw" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/sokol/IdeaProjects/lab10/security/build.gradle",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sokol/IdeaProjects/lab10/security/build.gradle&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -166,6 +95,15 @@
       <option name="presentableId" value="Default" />
       <updated>1745858704299</updated>
     </task>
+    <task id="LOCAL-00001" summary="Paste project from 9lab">
+      <option name="closed" value="true" />
+      <created>1745860438903</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1745860438903</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
