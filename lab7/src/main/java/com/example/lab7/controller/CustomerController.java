@@ -11,9 +11,13 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @SecurityRequirement(name = "bearerAuth")
 @RestController
@@ -25,9 +29,19 @@ public class CustomerController {
     private final CustomerRepository customerRepository;
     private final CurrentUserService currentUserService;
 
+    private boolean hasRole(Jwt jwt, String role) {
+        Map<String, Object> realmAccess = jwt.getClaimAsMap("realm_access");
+        if (realmAccess == null || !realmAccess.containsKey("roles")) return false;
+        List<String> roles = (List<String>) realmAccess.get("roles");
+        return roles.contains(role);
+    }
+
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<CustomerResponseDto>> getAllCustomers() {
+    public ResponseEntity<List<CustomerResponseDto>> getAllCustomers(@AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
+
         List<CustomerResponseDto> customers = customerRepository.findAll()
                 .stream()
                 .map(DtoMapper::toCustomerDto)
@@ -36,21 +50,22 @@ public class CustomerController {
     }
 
     @GetMapping("/me")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<CustomerResponseDto> getMyCustomer() {
-        Long customerId = currentUserService.getCurrentCustomerId();
-        if (customerId == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return customerRepository.findById(customerId)
+    @Transactional
+    public ResponseEntity<CustomerResponseDto> getMyCustomer(@AuthenticationPrincipal Jwt jwt) {
+        String keycloakId = jwt.getSubject();
+        return customerRepository.findByKeycloakId(keycloakId)
                 .map(DtoMapper::toCustomerDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<CustomerResponseDto> getCustomerById(@PathVariable Long id) {
+    public ResponseEntity<CustomerResponseDto> getCustomerById(@PathVariable Long id,
+                                                               @AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
+
         return customerRepository.findById(id)
                 .map(DtoMapper::toCustomerDto)
                 .map(ResponseEntity::ok)
@@ -58,21 +73,23 @@ public class CustomerController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<CustomerResponseDto> createCustomer(@RequestBody CustomerRequestDto customerRequest) {
+    public ResponseEntity<CustomerResponseDto> createCustomer(@RequestBody CustomerRequestDto customerRequest,
+                                                              @AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
+
         Customer customer = DtoMapper.toCustomer(customerRequest);
         Customer saved = customerRepository.save(customer);
         return ResponseEntity.ok(DtoMapper.toCustomerDto(saved));
     }
 
     @PutMapping("/me")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<CustomerResponseDto> updateMyCustomer(@RequestBody CustomerRequestDto customerRequest) {
-        Long customerId = currentUserService.getCurrentCustomerId();
-        if (customerId == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return customerRepository.findById(customerId)
+    public ResponseEntity<CustomerResponseDto> updateMyCustomer(@RequestBody CustomerRequestDto customerRequest,
+                                                                @AuthenticationPrincipal Jwt jwt) {
+        String keycloakId = jwt.getSubject();
+
+        return customerRepository.findByKeycloakId(keycloakId)
                 .map(customer -> {
                     customer.setName(customerRequest.getName());
                     customer.setAddress(new Address(
@@ -86,8 +103,13 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<CustomerResponseDto> updateCustomerById(@PathVariable Long id, @RequestBody CustomerRequestDto customerRequest) {
+    public ResponseEntity<CustomerResponseDto> updateCustomerById(@PathVariable Long id,
+                                                                  @RequestBody CustomerRequestDto customerRequest,
+                                                                  @AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
+
         return customerRepository.findById(id)
                 .map(customer -> {
                     customer.setName(customerRequest.getName());
@@ -102,8 +124,11 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id,
+                                               @AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
         if (customerRepository.existsById(id)) {
             customerRepository.deleteById(id);
             return ResponseEntity.ok().build();

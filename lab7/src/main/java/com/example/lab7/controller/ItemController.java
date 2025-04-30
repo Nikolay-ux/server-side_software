@@ -9,9 +9,12 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @SecurityRequirement(name = "bearerAuth")
 @RestController
@@ -21,9 +24,19 @@ public class ItemController {
 
     private final ItemRepository itemRepository;
 
+    private boolean hasRole(Jwt jwt, String role) {
+        Map<String, Object> realmAccess = jwt.getClaimAsMap("realm_access");
+        if (realmAccess == null || !realmAccess.containsKey("roles")) return false;
+        List<String> roles = (List<String>) realmAccess.get("roles");
+        return roles.contains(role);
+    }
+
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<ItemResponseDto>> getAllItems() {
+    public ResponseEntity<List<ItemResponseDto>> getAllItems(@AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
+
         List<ItemResponseDto> items = itemRepository.findAll().stream()
                 .map(DtoMapper::toItemDto)
                 .toList();
@@ -31,8 +44,12 @@ public class ItemController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ItemResponseDto> getItemById(@PathVariable Long id) {
+    public ResponseEntity<ItemResponseDto> getItemById(@PathVariable Long id,
+                                                       @AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
+
         return itemRepository.findById(id)
                 .map(DtoMapper::toItemDto)
                 .map(ResponseEntity::ok)
@@ -40,16 +57,23 @@ public class ItemController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ItemResponseDto> createItem(@RequestBody ItemRequestDto itemRequest) {
+    public ResponseEntity<ItemResponseDto> createItem(@RequestBody ItemRequestDto itemRequest,
+                                                      @AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
         Item item = DtoMapper.toItem(itemRequest);
         Item saved = itemRepository.save(item);
         return ResponseEntity.ok(DtoMapper.toItemDto(saved));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ItemResponseDto> updateItem(@PathVariable Long id, @RequestBody ItemRequestDto itemRequest) {
+    public ResponseEntity<ItemResponseDto> updateItem(@PathVariable Long id,
+                                                      @RequestBody ItemRequestDto itemRequest,
+                                                      @AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
         return itemRepository.findById(id)
                 .map(item -> {
                     item.setShippingWeight(itemRequest.getShippingWeight());
@@ -60,8 +84,12 @@ public class ItemController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteItem(@PathVariable Long id,
+                                           @AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
+
         if (itemRepository.existsById(id)) {
             itemRepository.deleteById(id);
             return ResponseEntity.ok().build();

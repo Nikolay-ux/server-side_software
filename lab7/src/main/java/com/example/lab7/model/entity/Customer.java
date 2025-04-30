@@ -22,6 +22,9 @@ public class Customer {
     @Column(nullable = false)
     private String name;
 
+    @Column(name = "keycloak_id", unique = true)
+    private String keycloakId;
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
 

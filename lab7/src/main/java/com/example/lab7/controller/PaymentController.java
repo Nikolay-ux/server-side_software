@@ -11,10 +11,13 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @SecurityRequirement(name = "bearerAuth")
 @RestController
@@ -26,10 +29,19 @@ public class PaymentController {
     private final OrderRepository orderRepository;
     private final CurrentUserService currentUserService;
 
+    private boolean hasRole(Jwt jwt, String role) {
+        Map<String, Object> realmAccess = jwt.getClaimAsMap("realm_access");
+        if (realmAccess == null || !realmAccess.containsKey("roles")) return false;
+        List<String> roles = (List<String>) realmAccess.get("roles");
+        return roles.contains(role);
+    }
+
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
     @Transactional(readOnly = true)
-    public ResponseEntity<List<PaymentResponseDto>> getAllPayments() {
+    public ResponseEntity<List<PaymentResponseDto>> getAllPayments(@AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
         List<PaymentResponseDto> payments = paymentRepository.findAll()
                 .stream()
                 .map(DtoMapper::toPaymentDto)
@@ -38,7 +50,6 @@ public class PaymentController {
     }
 
     @GetMapping("/my")
-    @PreAuthorize("hasRole('USER')")
     @Transactional(readOnly = true)
     public ResponseEntity<List<PaymentResponseDto>> getMyPayments() {
         Long customerId = currentUserService.getCurrentCustomerId();
@@ -54,9 +65,12 @@ public class PaymentController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     @Transactional(readOnly = true)
-    public ResponseEntity<PaymentResponseDto> getPaymentById(@PathVariable Long id) {
+    public ResponseEntity<PaymentResponseDto> getPaymentById(@PathVariable Long id,
+                                                             @AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
         return paymentRepository.findById(id)
                 .map(DtoMapper::toPaymentDto)
                 .map(ResponseEntity::ok)
@@ -64,18 +78,25 @@ public class PaymentController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
     @Transactional
-    public ResponseEntity<PaymentResponseDto> createPayment(@RequestBody PaymentRequestDto paymentRequest) {
+    public ResponseEntity<PaymentResponseDto> createPayment(@RequestBody PaymentRequestDto paymentRequest,
+                                                            @AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
         Payment payment = DtoMapper.toPayment(paymentRequest, orderRepository);
         Payment savedPayment = paymentRepository.save(payment);
         return ResponseEntity.ok(DtoMapper.toPaymentDto(savedPayment));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     @Transactional
-    public ResponseEntity<PaymentResponseDto> updatePayment(@PathVariable Long id, @RequestBody PaymentRequestDto paymentRequest) {
+    public ResponseEntity<PaymentResponseDto> updatePayment(@PathVariable Long id,
+                                                            @RequestBody PaymentRequestDto paymentRequest,
+                                                            @AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
         return paymentRepository.findById(id)
                 .map(payment -> {
                     payment.setAmount(paymentRequest.getAmount());
@@ -93,9 +114,12 @@ public class PaymentController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     @Transactional
-    public ResponseEntity<Void> deletePayment(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePayment(@PathVariable Long id,
+                                              @AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
         if (paymentRepository.existsById(id)) {
             paymentRepository.deleteById(id);
             return ResponseEntity.ok().build();

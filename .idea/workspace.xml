@@ -4,10 +4,59 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9918d4c8-a493-4cd6-8824-602cbc6b5eb5" name="Changes" comment="Paste project from 9lab">
-      <change afterPath="$PROJECT_DIR$/lab7/src/main/resources/static/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="9918d4c8-a493-4cd6-8824-602cbc6b5eb5" name="Changes" comment="Create docker-compose file to run keycloak">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/lab7.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/config/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/config/KeycloakConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/dto/request/CustomerRegistrationDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/dto/request/RegistrationRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/Role.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/Roles.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/repository/RoleRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/service/KeycloakAdminService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/service/KeycloakService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/lab7/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/config/JwtAuthFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/config/JwtUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/controller/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/controller/ItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/controller/ItemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/model/entity/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/repository/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/repository/CustomerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/service/CurrentUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab7/src/main/java/com/example/lab7/service/CurrentUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/lab7/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/src/main/resources/db/changelog/changelog.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lab7/src/main/resources/db/changelog/changelog.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/example/security/SecurityApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/example/security/config/JwtAuthFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/example/security/config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/example/security/controller/AuthController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/example/security/dto/AuthRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/example/security/dto/AuthResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/example/security/dto/RegisterRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/example/security/entity/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/example/security/entity/Roles.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/example/security/entity/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/example/security/repository/RoleRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/example/security/repository/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/example/security/service/AuthService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/example/security/service/JwtService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/example/security/service/UserDetailsServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/resources/db/changelog/changelog.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/test/java/com/example/security/SecurityApplicationTests.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +77,10 @@
         <projects_view>
           <tree_state>
             <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="lab7" type="f1a62948:ProjectNode" />
+              </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="security" type="f1a62948:ProjectNode" />
@@ -78,14 +131,48 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.Lab7Application.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.keycloak-user-storage [:org.example.Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.lab7 [:com.example.lab7.Lab7Application.main()].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/sokol/IdeaProjects/lab10/security/build.gradle&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sokol/IdeaProjects/lab10/lab7&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.lab7.repository" />
+      <recent name="com.example.lab7.model.entity" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Lab7Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.lab7.Lab7Application" />
+      <module name="lab7.main" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/lab7" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.lab7.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Lab7Application" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -103,7 +190,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745860438903</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Create docker-compose file to run keycloak">
+      <option name="closed" value="true" />
+      <created>1745932880081</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1745932880081</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -119,6 +214,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Paste project from 9lab" />
-    <option name="LAST_COMMIT_MESSAGE" value="Paste project from 9lab" />
+    <MESSAGE value="Create docker-compose file to run keycloak" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create docker-compose file to run keycloak" />
   </component>
 </project>

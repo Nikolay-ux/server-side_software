@@ -1,4 +1,4 @@
-package com.example.security.entity;
+package com.example.lab7.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

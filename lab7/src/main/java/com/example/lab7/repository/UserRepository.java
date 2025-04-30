@@ -1,6 +1,6 @@
-package com.example.security.repository;
+package com.example.lab7.repository;
 
-import com.example.security.entity.User;
+import com.example.lab7.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -270,5 +270,12 @@
             <column name="authority" value="ROLE_USER"/>
         </insert>
     </changeSet>
+    <changeSet id="add-keycloak-id-to-customers" author="Nick">
+        <addColumn tableName="customers">
+            <column name="keycloak_id" type="VARCHAR(36)" remarks="ID пользователя в Keycloak">
+                <constraints unique="true" nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>

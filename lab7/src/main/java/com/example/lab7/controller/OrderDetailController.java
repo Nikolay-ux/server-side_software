@@ -12,10 +12,13 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @SecurityRequirement(name = "bearerAuth")
 @RestController
@@ -28,10 +31,19 @@ public class OrderDetailController {
     private final CurrentUserService currentUserService;
     private final ItemRepository itemRepository;
 
+    private boolean hasRole(Jwt jwt, String role) {
+        Map<String, Object> realmAccess = jwt.getClaimAsMap("realm_access");
+        if (realmAccess == null || !realmAccess.containsKey("roles")) return false;
+        List<String> roles = (List<String>) realmAccess.get("roles");
+        return roles.contains(role);
+    }
+
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
     @Transactional
-    public ResponseEntity<List<OrderDetailResponseDto>> getAllOrderDetails() {
+    public ResponseEntity<List<OrderDetailResponseDto>> getAllOrderDetails(@AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
         List<OrderDetailResponseDto> details = orderDetailRepository.findAll()
                 .stream()
                 .map(DtoMapper::toOrderDetailDto)
@@ -40,7 +52,6 @@ public class OrderDetailController {
     }
 
     @GetMapping("/my")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<OrderDetailResponseDto>> getMyOrderDetails() {
         Long customerId = currentUserService.getCurrentCustomerId();
         if (customerId == null) {
@@ -55,8 +66,11 @@ public class OrderDetailController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<OrderDetailResponseDto> getOrderDetailById(@PathVariable Long id) {
+    public ResponseEntity<OrderDetailResponseDto> getOrderDetailById(@PathVariable Long id,
+                                                                     @AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
         return orderDetailRepository.findById(id)
                 .map(DtoMapper::toOrderDetailDto)
                 .map(ResponseEntity::ok)
@@ -64,16 +78,23 @@ public class OrderDetailController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<OrderDetailResponseDto> createOrderDetail(@RequestBody OrderDetailRequestDto detailRequest) {
+    public ResponseEntity<OrderDetailResponseDto> createOrderDetail(@RequestBody OrderDetailRequestDto detailRequest,
+                                                                    @AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
         OrderDetail detail = DtoMapper.toOrderDetail(detailRequest, orderRepository, itemRepository);
         OrderDetail saved = orderDetailRepository.save(detail);
         return ResponseEntity.ok(DtoMapper.toOrderDetailDto(saved));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<OrderDetailResponseDto> updateOrderDetail(@PathVariable Long id, @RequestBody OrderDetailRequestDto detailRequest) {
+    public ResponseEntity<OrderDetailResponseDto> updateOrderDetail(@PathVariable Long id,
+                                                                    @RequestBody OrderDetailRequestDto detailRequest,
+                                                                    @AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
         return orderDetailRepository.findById(id)
                 .map(detail -> {
                     detail.setQuantity(detailRequest.getQuantity());
@@ -84,8 +105,11 @@ public class OrderDetailController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteOrderDetail(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOrderDetail(@PathVariable Long id,
+                                                  @AuthenticationPrincipal Jwt jwt) {
+        if (!hasRole(jwt, "ROLE_ADMIN")) {
+            return ResponseEntity.status(403).build();
+        }
         if (orderDetailRepository.existsById(id)) {
             orderDetailRepository.deleteById(id);
             return ResponseEntity.ok().build();
